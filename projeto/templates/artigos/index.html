@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JQuery</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+    </head>
+    <body>
+        <h2 class="text-info">Consumindo api com JQuery</h2>
+
+        <ul class="list-group" id="autores"></ul>
+
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script>
+        $.ajax({
+            url:'http://127.0.0.1:8000/artigos/autor/',
+            dataType:'json',
+            success:function(autores){
+                console.log(autores);
+                $.each(autores, function(){
+                    $('#autores').append('<li class="list-group-item">'+ this.nome +'</li>');
+                    $('#autores').append('<li class="list-group-item">'+ this.endereco +'</li>');
+                    $('#autores').append('<li class="list-group-item">'+ (this.site === null || this.site == ''?"Não Informado":this.site) +'</li>');
+                    $('#autores').append('<li class="list-group-item">'+ this.email +'</li>');
+                    $('#autores').append('<br>');
+                })
+            }
+        });
+        </script>
+    </body>
+</html>
